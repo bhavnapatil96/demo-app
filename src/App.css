@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: rebeccapurple;
+  height: 100px;
+  padding: 20px;
+  color: white;
+}
+.App-menu{
+  background-color: #222;
+  height: 60px;
+  padding: 20px;
+  color: white;
+}
+.App-menu-item{
+  font-size:12pt;
+  margin-right:12px;
+  color: white;
+  float: left;
+}
+.App-menu-item-email {
+  font-size:12pt;
+  margin-right:12px;
+  color: white;
+  float: right;
+}
+.App-menu-item:hover{
+  color: red;
+}
+.App-menu-item:active{
+}
+.App-footer {
+  background-color: rebeccapurple;
+  height: 80px;
+  padding: 20px;
+  color: white;
+}
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
