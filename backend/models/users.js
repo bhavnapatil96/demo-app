@@ -25,8 +25,8 @@ let UserSchema=new mongoose.Schema({
         default:true
     }
 });
-UserSchema.statics.findByToken= function(token){
-    let user =this;
+    UserSchema.statics.findByToken= function(token){
+        let use =this;
     let decoded;
     try{
         decoded=jwt.verify(token,'geet');

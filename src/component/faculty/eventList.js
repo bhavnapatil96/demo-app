@@ -24,6 +24,7 @@ class Faculty_Event_List extends React.Component{
             totalRecords:3,
             curr:1,
             isActive:false,
+            editEvent:[]
         }
 
     }
@@ -35,7 +36,7 @@ class Faculty_Event_List extends React.Component{
         debugger;
         this.setState({event:nextProps.eventlist})
     }
-    toggle=()=>{
+    toggleModal=()=>{
         this.setState({
             isActive:true,
         })
@@ -43,9 +44,13 @@ class Faculty_Event_List extends React.Component{
     setStateFalse=()=>{
         console.log('called');
         this.setState({
-            isActive:false
-        })
+            isActive:false,
+            editEvent:[]
+
+        },()=>{
+            console.log('clear....',this.state.editEvent);})
     }
+
     mypage=(no)=>{
         this.setState({curr:no})
     }
@@ -89,6 +94,9 @@ class Faculty_Event_List extends React.Component{
         }
         this.props.deleteEvent(obj);
     }
+    openMap=()=>{
+        this.props.history.push('/faculty/map')
+    }
     render() {
         let pages=[];
         let len=this.state.event.length;
@@ -114,7 +122,7 @@ class Faculty_Event_List extends React.Component{
                     </OverlayTrigger>
                 </div>
                 <div className="col-lg-2">
-                    <Button bsStyle="success" onClick={this.toggle}>Add Event</Button>
+                    <Button bsStyle="success" onClick={this.toggleModal}>Add Event</Button>
                 </div>
                 <br/>
                 <br/>
@@ -145,6 +153,13 @@ class Faculty_Event_List extends React.Component{
                                 </OverlayTrigger>
                             </th>
                             <th>
+                                Location
+                                <OverlayTrigger placement="left" overlay={tooltipSort}>
+                                    <i id="location" style={{"float": "right"}} onClick={this.sort}
+                                       className="fa fa-sort"></i>
+                                </OverlayTrigger>
+                            </th>
+                            <th>
                                 Action
                             </th>
                         </tr>
@@ -154,18 +169,19 @@ class Faculty_Event_List extends React.Component{
                             totalRec.map((event,i)=>{
                                 let dt=new Date(event.date);
                                 return(
-                                    <tr>
+                                    <tr onClick={this.openMap}>
                                         <td>{event.name}</td>
                                         <td>{dt.toLocaleDateString()}</td>
                                         <td>{event.organizer}</td>
+                                        <td>{event.location}</td>
                                         <td>
                                             <Button bsStyle="danger" onClick={()=>{this.delete(event._id)}}><i className="fa fa-trash"></i></Button>
                                             <Button bsStyle="primary" onClick={()=>{
                                                 this.setState({
                                                     editEvent:event
                                                 })
-                                                this.toggle();
-                                            }}><i className="fa fa-pencil"></i></Button>-
+                                                this.toggleModal();
+                                            }}><i className="fa fa-pencil"></i></Button>
 
                                         </td>
                                     </tr>
@@ -195,7 +211,7 @@ class Faculty_Event_List extends React.Component{
                             </td>
                         </tr>
                     </Table>
-                    <Event_Form isShow={this.state.isActive} setStateFalse={this.setStateFalse} Edit={this.state.editEvent}/>
+                    <Event_Form isShow={this.state.isActive} setStateFalse={this.setStateFalse}  Edit={this.state.editEvent}/>
                 </div>
             </div>
         );

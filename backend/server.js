@@ -259,11 +259,12 @@ app.post('/api/users/findByEmail', isLoggedIn, (req, res) => {
 });
 
 app.post('/api/events/add', isLoggedIn, (req, res) => {
-    console.log("Body", req.body.fullname);
+    console.log("Body", req.body);
     let eve = new event({
         name: req.body.name,
         date: req.body.date,
-        organizer: req.body.organizer
+        organizer: req.body.organizer,
+        location: req.body.location,
     });
     eve.save().then((data) => {
         res.send(data)
@@ -295,7 +296,8 @@ app.post('/api/events/update', isLoggedIn, (req, res) => {
     event.findById(req.body.id).then((data) => {
         data.name = req.body.name,
         data.date = req.body.date,
-        data.organizer = req.body.organizer
+        data.organizer = req.body.organizer,
+        data.location=req.body.location
         data.save().then((event) => {
             console.log('res....', event)
             res.send(event)

@@ -13,16 +13,24 @@ class Event_Form extends Component {
             editId: ''
         }
     }
+    componentWillMount(){
 
+    }
     handleChange = (e) => {
         const {value, name} = e.target
         const {event} = this.state;
-        event.name = value
+        event[name] = value
         this.setState({ event}, () => {
             console.log('state ', this.state.event)
         })
     }
 
+    clear=()=>{
+        debugger
+        this.setState({
+            event:[]
+        },()=>{console.log('clear',this.state.event)})
+    }
     componentWillReceiveProps(nextProps) {
         debugger
         if (nextProps.Edit && nextProps.Edit._id) {
@@ -30,10 +38,12 @@ class Event_Form extends Component {
                 console.log("Event",this.state.event)
             })
         }
+
     }
 
     navigate = () => {
         debugger;
+        this.clear();
         this.props.setStateFalse();
     }
     save = (e) => {
@@ -48,6 +58,7 @@ class Event_Form extends Component {
             formdata.append('name', event.name);
             formdata.append('date', event.date);
             formdata.append('organizer', event.organizer);
+            formdata.append('location', event.location);
             formdata.append('id', this.state.editId);
             this.props.editEvent(formdata).then((data) => {
                 if (data) {
@@ -60,6 +71,7 @@ class Event_Form extends Component {
             formdata.append('name', event.name);
             formdata.append('date', event.date);
             formdata.append('organizer', event.organizer);
+            formdata.append('location', event.location);
             this.props.addEvent(formdata).then((data) => {
                 if (data) {
                     this.navigate()
@@ -112,6 +124,15 @@ class Event_Form extends Component {
                                     <input className="form-control" type="text"
                                            value={event && event.organizer}
                                            placeholder="Organizer" onChange={this.handleChange} name="organizer"
+                                           required="true"/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-2 col-form-label" for="txtname">Location</label>
+                                <div className="col-sm-10">
+                                    <input className="form-control" type="text"
+                                           value={event && event.location}
+                                           placeholder="Location" onChange={this.handleChange} name="location"
                                            required="true"/>
                                 </div>
                             </div>

@@ -112,7 +112,7 @@ export const EventReducer=(state=initialState,action)=>{
             return{
                 ...state,eventList:state.eventList}
         default :
-            return {...state}
+            return state
 
     }
 }

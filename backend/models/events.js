@@ -11,6 +11,9 @@ let EventSchema=new mongoose.Schema({
     organizer:{
         type:String,
     },
+    location:{
+      type:String,
+    },
     isDelete:{
         type:Boolean,
         default:true

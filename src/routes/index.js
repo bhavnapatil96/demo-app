@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavLink,Switch,Route,Redirect} from 'react-router-dom'
-import {Navbar,NavItem,Nav,NavDropdown,MenuItem,Button} from 'react-bootstrap'
 import Home from '../component/home'
 import About from '../component/about'
 import Login from '../component/login'
@@ -18,16 +17,18 @@ import Faculty_Dashboard from '../component/faculty/dashboard'
 import facultyProfile from '../component/faculty/facultyProfile'
 import Faculty_Student from '../component/faculty/student'
 import Faculty_Event_List from '../component/faculty/eventList'
+import Map from '../component/faculty/map'
 
 
- import '../App.css'
+
+import { withRouter } from 'react-router'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux';
+import '../App.css'
 
 import Logout from '../component/logout'
+import Private from './private'
 
-const Private=({...props})=>{
-    return localStorage.getItem('token')?<div><Route {...props}/></div>
-        :<Redirect to="/"/>
-};
 const Public = ({...props}) => {
     return !localStorage.getItem('token') || localStorage.getItem('token') ? <div><Route {...props}/>
         </div> :<Home/>
@@ -41,9 +42,9 @@ class Routes extends React.Component{
         }
     }
     setStateFalse(){
-        //console.log('called', val);
+        debugger
         this.setState({
-            isActive:false
+            isActive: false,
         })
     }
     toggle=()=>{
@@ -118,6 +119,7 @@ class Routes extends React.Component{
                         <Private exact path="/faculty/profile" component={facultyProfile}/>
                         <Private exact path="/faculty/student" component={Faculty_Student}/>
                         <Private exact path="/faculty/event" component={Faculty_Event_List}/>
+                        <Private exact path="/faculty/map" component={Map}/>
 
                         <Private exact path="/logout" component={Logout}/>
 
@@ -131,4 +133,9 @@ class Routes extends React.Component{
         )
     }
 }
-export default Routes
+function matchDispatchToProps(dispatch) {
+    debugger;
+    return bindActionCreators({
+    },dispatch)
+}
+export default withRouter(connect(null,matchDispatchToProps)(Routes,Private));
